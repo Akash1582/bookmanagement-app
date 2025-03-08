@@ -3,7 +3,7 @@ pipeline{
 	environment {
 		DOCKER_IMAGE = "akash1582/bookmanagement-app"
 		DOCKER_TAG = "latest"
-		DOCKER_CREDENTIALS_ID = "bhesalakash123@gmail.com"
+		DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
 		GITHUB_REPO = "https://github.com/Akash1582/bookmanagement-app.git"
 
 	}
