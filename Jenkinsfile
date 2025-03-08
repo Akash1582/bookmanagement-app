@@ -4,7 +4,7 @@ pipeline{
 		DOCKER_IMAGE = "akash1582/bookmanagement-app"
 		DOCKER_TAG = "latest"
 		DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
-   		CONTAINER_NAME = "bookmanagement-app"
+   		CONTAINER_NAME = "usermanagementpipeline-usermanagement-application-1"
 	}
 	stages{
 		stage('Run Docker container'){
