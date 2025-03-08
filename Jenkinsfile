@@ -6,7 +6,7 @@ pipeline{
 		DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
    		CONTAINER_NAME = "bookmanagement-app"
 	}
-	Stages{
+	stages{
 		stage('Run Docker container'){
 			steps{
 				//Pull the latest image
