@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: book-management-app
+  name: bookmanagement-app
   labels:
     app: book-app
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: book-app
@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
       - name: book-app-container
-        image: chavanakshay/book-management # Use your private repository name
+        image: akash1582/bookmanagement-app # Use your private repository name
         ports:
         - containerPort: 8081
-      imagePullSecrets:
-      - name: dockerhub-secret # Reference the secret created for Docker Hub
+          #    imagePullSecrets:
+          # - name: dockerhub-secret # Reference the secret created for Docker Hub
 
 ---
 
@@ -39,3 +39,4 @@ spec:
       port: 8081       # Port for external access
       targetPort: 8081 # Port on the container
       nodePort: 30081  # Port on the node (only for NodePort type)
+

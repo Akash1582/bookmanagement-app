@@ -4,47 +4,27 @@ pipeline{
 		DOCKER_IMAGE = "akash1582/bookmanagement-app"
 		DOCKER_TAG = "latest"
 		DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
-		GITHUB_REPO = "https://github.com/Akash1582/bookmanagement-app.git"
-
+   		CONTAINER_NAME = "bookmanagement-app"
 	}
 	Stages{
-		stage('Clone Repo'){
+		stage('Run Docker container'){
 			steps{
-				git branch: 'master', url: "${GITHUB_REPO}"
-			}
-		}
-		stage('Build Maven Project'){
-			steps{
-				sh 'mvn clean package'
-			}
-		}
-		stage('Build Docker Image'){
-			steps{
-				sh "docker build -t ${DOCKER_IMAGE}":${DOCKER_TAG} ."
-			}
-		}
-		stage('Push to Docker Hub'){
-			steps{
-				withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTAILS_ID}", usernameVariable: "DOCKER_USER", passwordVariable: "DOCKER_PASS")]){
-					sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} ==password-stdin"
-					sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-				}
-			}
-		}
-		stage('Deploy to minikube'){
-			steps{
-				sh 'minikube start'
-				sh 'kubectl apply -f kubernetes.yaml'
-				sh 'kubectl get pods'
+				//Pull the latest image
+				sh "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
+				
+				//Run docker container
+				sh "docker run -d --name ${CONTAINER_NAME} -p 8082:8081 ${DOCKER_IMAGE}:${DOCKER_TAG}"
+
 			}
 		}
 	}
+		
 	post{
 		success{
-			echo "Pipeline successfull"
+			echo "Pipeline executed"
 		}
 		failure{
-			echo "Pipeline failed"
+			echo "Pipeline failed!"
 		}
 	}
 }
